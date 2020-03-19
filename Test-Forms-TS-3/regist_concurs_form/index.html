@@ -1,0 +1,67 @@
+<style>
+	input[data-rule].valid{
+		border: 2px solid green;
+	}
+	.invalid {
+		border: 2px solid red;
+	}
+</style>
+
+<form action="insert.php" method="POST">
+<br><br><br><fieldset align="center">
+<legend>Intregistration to contest at our school online:</legend><br>
+<label for="info">All textboxex should be green. If your text box is red you tape invalid date, try again like in example. Good luck! :)</label><br><br>
+<label for="name">Your Name and LastName: (Example : Tom Derli )</label><br>
+<input data-rule="name" name="name" required><br><br>
+<label for="name">Your date: (Example 19-03-2020 *Obligatory dd-mm-yyyy)</label><br>
+<input data-rule="month" name="date" required><br><br>
+<label for="name">Class: (Example: 10 "B") </label><br>
+<input data-rule="class" name="class" required><br><br>
+<label for="name">Discipline (Only:Math , Romanian , English , Physics , Chemistry)</label><br>
+<input data-rule="discipline" name="discipline" required><br><br>
+<label for="name">Mark (Example: 8.45 *Obligatory with .00) </label><br>
+<input data-rule="mark" name="mark" required><br><br>
+<label for="name">Enter your mail:</label><br>
+<input data-rule="mail" name="mail" required><br><br>
+<input type="submit" value="Submit">
+</fieldset>
+</form>
+
+<script>
+	let inputs = document.querySelectorAll('input[data-rule]');
+	for (let input of inputs) {
+		input.addEventListener('blur', function() {
+			let rule = this.dataset.rule;
+			let value = this.value;
+			let check;
+		
+			switch (rule) {
+			case 'name':
+				check = /^[A-Z][a-z]+ [A-Z][a-z]+$/.test(value);
+			break;
+			case 'month':
+				check = /^\d{1,2}-\d{1,2}-\d{4}$/.test(value);
+			break;
+			case 'class':
+				check = /^\d{1,2} "[A-Z]"$/.test(value);
+			break;
+			case 'discipline':
+				check = /^([Math]+|[Romanian]+|[English]+|[Physics]+|[Chemistry]+)$/.test(value);
+			break;
+			case 'mark':
+				check = /^((10)|([1-9])\.[0-9][0-9])$/.test(value);
+			break;
+			case 'mail':
+				check =/^[a-z0-9.-_]+@[a-z.]+$/.test(value);
+			break;
+			}
+			if (check) {
+			this.classList.remove('invalid');
+			this.classList.add('valid');
+			} else {	
+			this.classList.remove('valid');
+			this.classList.add('invalid');
+			}
+		});
+	}
+</script>

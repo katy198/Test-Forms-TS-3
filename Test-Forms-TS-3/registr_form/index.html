@@ -1,0 +1,61 @@
+<style>
+	input[data-rule].valid{
+		border: 2px solid green;
+	}
+	.invalid {
+		border: 2px solid red;
+	}
+</style>
+<form action="insert.php" method="POST">
+<br><br><br><br><br><fieldset align="center">
+<legend>Intregistration to courses online:</legend><br>
+<label for="info">All textboxex should be green. If your text box is red you tape invalid date, try again like in example. Good luck! :)</label><br><br>
+<label for="name">First name: (Example : Tom )</label><br>
+<input data-rule="name" name="name" required><br><br>
+<label for="name">Last name:</label><br>
+<input data-rule="lastname" name="lastname" required><br><br>
+<label for="name">Language: (Java, C# , C++ , PHP , Python)</label><br>
+<input data-rule="language" name="language" required><br><br>
+<label for="name">Select hours 1 to 12:</label><br>
+<input data-rule="hours" name="hours" required><br><br>
+<label for="name">Enter your mail:</label><br>
+<input data-rule="mail" name="mail" required><br><br>
+<input type="submit" value="Submit">
+</fieldset>
+</form>
+
+<script>
+	let inputs = document.querySelectorAll('input[data-rule]');
+	for (let input of inputs) {
+		input.addEventListener('blur', function() {
+			let rule = this.dataset.rule;
+			let value = this.value;
+			let check;
+		
+			switch (rule) {
+			case 'name':
+				check = /^[A-Z][a-z]+$/.test(value);
+			break;
+			case 'lastname':
+				check = /^[A-Z][a-z]+$/.test(value);
+			break;
+			case 'language':
+				check = /^([Java]+|[C#]+|[C++]+|[PHP]+|[Python]+)$/.test(value);
+			break;
+			case 'hours':
+				check = /^(1[0-2]|[1-9])$/.test(value);
+			break;
+			case 'mail':
+				check =/^[a-z0-9.-_]+@[a-z.]+$/.test(value);
+			break;
+			}
+			if (check) {
+			this.classList.remove('invalid');
+			this.classList.add('valid');
+			} else {	
+			this.classList.remove('valid');
+			this.classList.add('invalid');
+			}
+		});
+	}
+</script>
